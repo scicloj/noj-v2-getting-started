@@ -1,2 +1,2 @@
-{:deps {org.scicloj/noj {:mvn/version "2-beta17"}}
+{:deps {org.scicloj/noj {:mvn/version "2-beta19.1"}}
  :paths ["notebooks"]}
