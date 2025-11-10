@@ -135,7 +135,6 @@ feed-dataset
 
 ;; ## Making the plot informative
 
-
 (-> feed-dataset
     (tc/order-by [:dtstart])
     (tc/add-column :count
@@ -157,6 +156,9 @@ feed-dataset
 
 ;; ## Recognizing groups
 
+(def groups-pattern
+  #"london-clojurians|los-angeles-clojure|visual-tools|data-recur|real-world-data|scicloj-llm|scicloj-ai|macroexpand|clojure-dsp")
+
 (-> feed-dataset
     (tc/order-by [:dtstart])
     (tc/add-column :count
@@ -175,8 +177,7 @@ feed-dataset
     (tc/map-columns :group
                     [:url]
                     (fn [url]
-                      (re-find #"london-clojurians|los-angeles-clojure|visual-tools|data-recur|real-world-data|scicloj-llm"
-                               (str/lower-case url)))))
+                      (re-find groups-pattern (str/lower-case url)))))
 
 ;; ## Colouring by group
 
@@ -198,7 +199,7 @@ feed-dataset
     (tc/map-columns :group
                     [:url]
                     (fn [url]
-                      (re-find #"london-clojurians|los-angeles-clojure|visual-tools|data-recur|real-world-data|scicloj-llm"
+                      (re-find groups-pattern
                                (str/lower-case url))))
     (plotly/layer-point {:=x :dtstart
                          :=y :count
@@ -222,7 +223,7 @@ feed-dataset
     (tc/map-columns :group
                     [:url]
                     (fn [url]
-                      (re-find #"london-clojurians|los-angeles-clojure|visual-tools|data-recur|real-world-data|scicloj-llm"
+                      (re-find groups-pattern
                                (str/lower-case url))))
     (tc/group-by [:group])
     (tc/add-column :count
@@ -247,7 +248,7 @@ feed-dataset
     (tc/map-columns :group
                     [:url]
                     (fn [url]
-                      (re-find #"london-clojurians|los-angeles-clojure|visual-tools|data-recur|real-world-data|scicloj-llm"
+                      (re-find groups-pattern
                                (str/lower-case url))))
     (tc/group-by [:group])
     (tc/add-column :count
